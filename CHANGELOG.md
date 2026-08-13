@@ -1,4 +1,92 @@
-# Changelog
+# AFLOAT Changelog
+
+## v1.9.0 — Batch 10: Historical Vessel Intelligence
+
+- Added a dedicated **Intelligence** workspace for vessel-specific historical observations.
+- Added fuel-performance history derived from explicit consumed quantity + engine-run hours, grouped by recorded RPM; speed is derived only when distance is also recorded.
+- Added water-use history with whole-vessel and optional per-person rates when duration and crew count are known.
+- Added first-class daily energy observations comparing predicted vs. actual load and generation.
+- Added repeated maintenance-interval observations using engine-hour intervals when available, otherwise calendar intervals.
+- Added sample mean/median, sample standard deviation (1σ), date range, source, and observational-confidence metadata.
+- Added plain-language vessel observations that retain sample size and provenance and are explicitly descriptive rather than prescriptive.
+- Extended resource transactions with optional engine-run hours, RPM, distance, crew count, and operating context.
+- Added a Historical Vessel Intelligence report to the Report Center.
+- Updated the SV Meridian demo with synthetic repeated fuel, water, electrical, and maintenance observations.
+- Added schema v16 non-destructive migration from v1.8/schema-v15 for `energyObservations`.
+- Updated PWA cache namespace to `afloat-v1.9.0`.
+- Added v1.9 model/migration regression coverage and desktop/tablet/phone Chromium render verification.
+
+## v1.8.0 — Batch 9: Reports + Vessel Knowledge Search
+
+- Upgraded report output to print-quality local previews with vessel metadata, report IDs, schema/app version, repeating headers, print-safe page breaks, and explicit data-quality notes.
+- Added evidence references to major operational report tables and common evidence/assumption appendices.
+- Added Port Arrival Brief, Anchorage Report, and Incident Report.
+- Expanded Report Center descriptions and report-health metrics.
+- Replaced flat JSON-string search with relationship-aware Vessel Knowledge Search.
+- Search ranks direct matches and expands connected records up to two hops with visible relationship paths.
+- Added knowledge-search regression coverage using manufacturer-only search terms to prove connected records surface without containing the query text.
+- Updated PWA cache namespace to `afloat-v1.8.0`.
+- Persisted schema remains v15; no data migration is required from v1.6.0.
+
+## v1.6.0 — Batch 8 — Evidence Cabinet + Vessel Timeline
+
+- Added a first-class **History** workspace.
+- Added first-class evidence metadata with title, kind, observed/captured time, creator, source, original filename, MIME type, byte size, and notes.
+- Added optional local embedded evidence files with a 5 MB per-item guardrail.
+- Added image previews and local evidence open/download behavior.
+- Reused AFLOAT's shared relationship model so a single evidence item can support multiple inspections, findings, maintenance records, equipment records, voyages, ports, documents, and other records without duplicating the file payload.
+- Added a unified Vessel Timeline derived from voyages, maintenance history, inspections, findings, port visits, procedure executions, anchor deployments, equipment commissioning, evidence records, incidents, and lessons.
+- Added first-class custom Timeline Milestones for significant events that do not already have another AFLOAT source record.
+- Added timeline filters for event type, vessel system, voyage, and free-text search.
+- Added Evidence & Vessel Timeline reporting.
+- Added schema v14/v15 non-destructive migrations from the v1.4/schema-v13 model.
+- Updated SV Meridian demo data with linked evidence records and a refit milestone.
+- Updated offline cache namespace to `afloat-v1.6.0`.
+- Verified History, Logbook, and Vessel rendering at desktop, tablet, and phone sizes with no page-level horizontal overflow or browser JavaScript errors.
+
+## v1.4.0 — Batch 7 — Ship’s Papers + Procedures
+
+- Upgraded schema from v11 to v13 with non-destructive document/procedure migrations.
+- Added planned voyage departure and arrival dates for pre-departure compliance checks.
+- Expanded Ship’s Papers with category, holder/crew, issuing authority, jurisdiction, source date, verification date, confidence, renewal notes, and departure-readiness applicability.
+- Added voyage-window document compliance so records can PASS, WATCH, FAIL, or UNKNOWN based on actual planned/active passage dates rather than only a generic expiry horizon.
+- Readiness now evaluates departure-required documents individually and exposes document-specific dependencies/reasons.
+- Expanded Ship’s Papers workspace and report with required/informational distinction and voyage compliance status.
+- Expanded vessel-specific procedures with prerequisites, warnings, equipment locations, required tools, required parts, and notes.
+- Added first-class persistent Procedure Execution records.
+- Starting a procedure immediately creates an execution record that can be resumed after interruption.
+- Completed checklist steps receive timestamps.
+- Skipped steps require an explicit reason and may carry notes.
+- Completion is blocked until every step is completed or explicitly skipped; executions may also be aborted and preserved.
+- Added permanent procedure execution history and Procedure Execution History reporting.
+- Updated SV Meridian demo data with voyage-window paper review and completed procedure history.
+- Updated offline cache namespace to `afloat-v1.4.0`.
+- Preserved the self-contained `index.html` deployment model introduced by the rendering hotfix.
+- Fixed a standalone bundling regression discovered during Chromium validation where `export` tokens from async database functions remained in the inline classic-script bundle.
+- Verified representative Ports/Ship’s Papers and Procedures screens at desktop and phone sizes plus the mobile live-execution modal with no page-level horizontal overflow or browser JavaScript errors.
+
+## v1.2.0 — Batch 6 — Anchor + Ports / Anchorages
+
+- Added first-class ground-tackle configurations with primary/secondary roles, anchor/rode details, and usable rode length.
+- Added first-class anchor deployment records linked to anchorage and ground tackle.
+- Added anchor position observations for deployment history and drag observations.
+- Expanded anchor planning to show effective depth, required rode, rode margin, conservative swing radius, and hazard-clearance margin.
+- Added recorded anchorage-experience summaries including deployment count, maximum recorded wind, drag observations, and reset count.
+- Expanded anchorage knowledge with approach, hazards, night-approach, shore-access, and dinghy-landing notes.
+- Added first-class port visit history so individual stops never overwrite long-lived port knowledge.
+- Expanded port records with clearance, harbor-master, marina, shore-service, communications, contact, and source/verification fields.
+- Added visit notes, services used, fuel/water taken aboard, berth/location, and lessons learned.
+- Added schema v10/v11 non-destructive migrations from the v1.0.1 schema v9 model.
+- Bumped offline cache namespace to afloat-v1.2.0.
+
+## 1.0.1 — Rendering hotfix
+
+- Made `index.html` self-rendering by inlining the full release stylesheet.
+- Bundled AFLOAT's browser modules into an inline dependency-free application script.
+- The app now renders when `index.html` is opened directly or previewed without sibling asset routing.
+- Retained the modular source files and PWA assets for normal hosted deployment.
+- Added `js/afloat.bundle.js` as a packaged/debuggable copy of the bundled runtime.
+- Service-worker registration remains best-effort and gracefully unavailable under `file://`.
 
 ## v1.0.0 — Batch 5: Operational Release
 

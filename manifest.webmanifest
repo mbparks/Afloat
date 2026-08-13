@@ -1,0 +1,12 @@
+{
+  "name": "AFLOAT — Vessel Operations Workbench",
+  "short_name": "AFLOAT",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0a1117",
+  "theme_color": "#0a1117",
+  "description": "Local-first vessel operations, voyage planning, maintenance, resources, stores, procedures, ports, and logbook.",
+  "icons": [
+    {"src":"assets/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
