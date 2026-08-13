@@ -1,3 +1,9 @@
+# Batch 18 implementation note — AFLOAT v3.5.0
+
+The v3.4/v3.5 implementation adds evidence-derived Passage Replay and a reusable What Changed? comparison engine. Replay reconstructs recorded vessel context from stored AFLOAT records at a selected voyage time; it does not invent missing historical values. Comparison supports voyage-to-voyage and Twin-baseline-to-baseline analysis and reports explicit B − A differences without implying causation. Schema v31 adds voyage decision markers/replay preferences; schema v32 adds comparison preferences.
+
+---
+
 # FIELD INSTRUMENT BUILD PROMPT: AFLOAT
 
 Build a complete browser-based Field Instrument called **AFLOAT**.

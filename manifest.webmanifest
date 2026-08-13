@@ -1,12 +1,14 @@
 {
-  "name": "AFLOAT — Vessel Operations Workbench",
+  "name": "AFLOAT — Vessel Operations",
   "short_name": "AFLOAT",
-  "start_url": "./",
+  "description": "Local-first vessel operations, passage planning, maintenance, connected data, digital-twin, maintenance forecasting, operational lessons, uncertainty planning, explainable model health, and streamlined Cruising/Engineering workflows.",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#0a1117",
-  "theme_color": "#0a1117",
-  "description": "Local-first vessel operations, voyage planning, maintenance, resources, stores, procedures, ports, and logbook.",
+  "background_color": "#071016",
+  "theme_color": "#071016",
   "icons": [
-    {"src":"assets/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+    {"src":"./icon-192.svg","sizes":"192x192","type":"image/svg+xml","purpose":"any maskable"},
+    {"src":"./icon-512.svg","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}
   ]
 }

@@ -1,5 +1,193 @@
 # AFLOAT Changelog
 
+## v3.9.1 — UI / UX Streamlining
+
+- Reorganized the 20-item sidebar into collapsible **Operate / Vessel / Review / Connect / System** groups.
+- Automatically keeps the active page's navigation group open.
+- Preserved full icon access when the desktop sidebar is collapsed.
+- Added sticky **Jump to** section navigation on long workspaces including Voyage, Vessel, Resources, Ports, History, Intelligence, Twin, Forecast, and Settings.
+- Separated the page workflow eyebrow from a compact **Cruising / Engineering** mode badge.
+- Reduced top-bar, card, metric, table, and section spacing without reducing touch-target sizing.
+- Removed regular card drop shadows for a calmer instrument-panel hierarchy.
+- Reduced low-priority action prominence on compact/mobile layouts.
+- Tightened sidebar branding and vessel summary while retaining vessel status/context.
+- Kept Cruising/Engineering data semantics unchanged; no vessel records are duplicated or mutated by the interface mode.
+- Schema remains **v36**; no data migration is required from v3.9.0.
+- Updated the PWA cache namespace to `afloat-v3.9.1`.
+
+
+## v3.9.0 — Batch 20: Maintenance / Parts Forecasting + Digital Twin Hardening
+
+- Added a top-level **Forecast** workspace.
+- Added first-class `maintenanceForecasts` with voyage, horizon, expected engine-use, expected cycle-use, and fallback duration assumptions.
+- Added projection of explicit engine-hour, calendar, and cycle maintenance due points into before-departure / during-passage / within-horizon states.
+- Added recurrence counting for repeated hour/date/cycle maintenance intervals.
+- Added linked spare-parts aggregation across all forecast task occurrences.
+- Added onboard-vs-required comparison and explicit forecast shortage review; forecast calculations never consume inventory.
+- Kept condition-based tasks without deterministic due points as REVIEW / UNKNOWN instead of inventing dates.
+- Added unquantified consumables review while preserving the existing free-text consumable model.
+- Added a print-quality **Maintenance & Parts Forecast** report.
+- Added per-quantity Digital Twin data-quality dimensions: completeness, freshness, source confidence, historical N, variability, and comparability.
+- Added category-level **Digital Twin Health** without a composite quality score.
+- Added **Why?** explainability for Twin divergences, including source inputs, delta, threshold/direction, and quality dimensions.
+- Added a print-quality **Digital Twin Health** report.
+- Added schema **v35** (`maintenanceForecasts`) and **v36** (Twin-quality preferences) with direct non-destructive v34→v36 migration.
+- Updated the PWA cache namespace to `afloat-v3.9.0`.
+- Corrected the standalone icon link to a packaged icon asset.
+
+## v3.7.0 — Batch 19: Operational Lessons + Uncertainty / Monte Carlo Planning
+
+- Added a top-level **Lessons** workspace for contextual vessel-specific experience.
+- Added first-class structured `lessons` records with Event → Observation → Decision → Result → Lesson fields, source, confidence, tags, and links to voyage/port/anchorage/equipment/system context.
+- Added contextual lesson retrieval from explicit lessons plus existing port visits, anchor deployments, maintenance history, findings, and lesson-tagged voyage logs.
+- Preserved source-record traceability; derived lesson summaries remain identified as recorded experience and do not establish future operating limits.
+- Added an **Operational Lessons Report**.
+- Added first-class `uncertaintyScenarios` in the Voyage workspace.
+- Added deterministic seeded Monte Carlo analysis for passage speed, delay, fuel burn, motor hours, water use, and electrical net energy.
+- Added P05 / P10 / P50 / P90 / P95 distributions for passage duration and resource margins.
+- Added separate fuel, water, power, and provision preferred-reserve breach frequencies; no combined risk score is generated.
+- Added explicit input-distribution tables in Engineering mode and a print-quality **Passage Uncertainty Report**.
+- Added schema **v33** (`lessons`) and **v34** (`uncertaintyScenarios`) with direct non-destructive v32→v34 migration.
+- PWA cache namespace updated to `afloat-v3.7.0`.
+
+## v3.5.0 — Batch 18: Passage Replay + What Changed? Comparison
+
+- Added a top-level **Replay** workspace.
+- Added first-class `voyageEvents` for explicit decision/course/sail/engine/energy/resource/repair/weather markers.
+- Passage Replay reconstructs recorded state at a selected voyage timestamp using stored navigation tracks, resource transactions, energy observations, environment observations, watches, findings, logs, procedures, alerts, and maintenance history.
+- Added a timeline scrubber and event-jump workflow; replay does not synthesize missing historical values.
+- Added a reusable comparison engine for **voyage vs voyage** and **Twin baseline vs baseline**.
+- Voyage comparison includes duration, recorded distance and average speed, planned speed, fuel/water consumed, recorded engine run time, electrical load/generation, maintenance completions, findings, procedure runs, decision markers, and log entries.
+- Twin baseline comparison remains the path for pre/post-refit, survey, annual, and season state comparisons.
+- Added explicit B − A value and percentage deltas with a causation/diagnosis boundary.
+- Added **Passage Replay Report** and **What Changed? Comparison** reports.
+- Added Replay decision markers to the unified Vessel Timeline and shared inspector/relationship/search model.
+- Added a prior SV Meridian Annapolis → Bermuda demo passage plus replay tracks and decision markers for side-by-side comparison.
+- Added schema **v31** (`voyageEvents` + replay preferences) and **v32** (comparison preferences), with direct non-destructive v30→v32 migration.
+- PWA cache namespace updated to `afloat-v3.5.0`.
+
+
+## v3.3.0 — Batch 17: Empirical Performance Models + Degradation / Trend Analysis
+
+- Added first-class `performanceObservations` for recorded sailing, solar, refrigeration, and watermaker behavior.
+- Expanded the empirical propulsion model to show RPM, observed speed, fuel burn, and nautical-mile-per-fuel-unit efficiency with N, date range, spread, and confidence.
+- Added observational sailing performance grouped by true-wind speed and angle; AFLOAT explicitly labels this as recorded performance rather than a design polar.
+- Added solar-production models grouped by operating/weather context.
+- Added refrigeration-energy models grouped by cabin-temperature band.
+- Added watermaker-production models grouped by sea-temperature band.
+- Added configurable behavior-change analysis comparing a recent observation window against older recorded history.
+- Trend results preserve baseline/recent N, date windows, means, percent change, 30-day slope, direction-specific review threshold, and observational confidence.
+- Added default trend definitions for fuel burn near planning RPM, engine coolant temperature, alternator temperature, electrical generation, watermaker output, bilge-cycle frequency, and refrigeration energy.
+- Added **Behavior change review** to the Twin workspace so material recorded changes are visible beside model-vs-current differences.
+- Added Engineering controls for performance-observation entry and trend settings.
+- Added a print-quality **Performance & Trend Analysis** report.
+- Added performance observations to global relationship/search/backup/retention handling.
+- Added schema **v29** (`performanceObservations`) and schema **v30** (`trendDefinitions` + trend preferences) with direct non-destructive v28→v30 migration.
+- Maintained the Digital Twin boundary: trends are observational review signals, not fault diagnoses, safety declarations, or manufacturer-limit replacements.
+
+## v3.1.0 — Batch 16: Digital Twin Core + Baselines / Comparison
+
+- Added a top-level **Twin** workspace.
+- Added a shared Twin quantity model with explicit **DESIGNED / PLANNED / CURRENT / HISTORICAL** states.
+- Twin values resolve from existing AFLOAT records/live observations and do not overwrite their source data.
+- Added source/freshness/confidence/uncertainty context where the underlying state provides it.
+- Added directional current-vs-plan divergence semantics (`above-plan`, `below-plan`, `absolute`, or none) and a configurable Engineering review band.
+- Added Cruising and Engineering Twin matrices with materially different levels of detail.
+- Added schema **v27** with reusable Twin quantity definitions and Twin preferences.
+- Added schema **v28** with immutable-style Twin baseline snapshots.
+- Added named baseline capture for passage/refit/haulout/survey/annual/manual comparison points.
+- Added baseline A/B comparison with quantity-by-quantity deltas.
+- Added two realistic SV Meridian demo baselines to exercise comparison.
+- Added a print-quality **Digital Twin State Report**.
+- Added Twin quantities/baselines to the shared relationship/inspector model.
+- Added direct non-destructive schema-v26 → schema-v28 migration coverage.
+- PWA cache namespace updated to `afloat-v3.1.0`.
+- Maintained AFLOAT’s decision-support boundary: Twin divergence is descriptive and does not declare a vessel or voyage safe/unsafe.
+
+## v2.9.0 — Batch 15: Local Alert Engine + Integration Hardening
+
+- Added a dedicated **Alerts** workspace with fully local rule evaluation.
+- Added source-stale, live-threshold, derived-metric, maintenance, resource-margin, battery-reserve, and bilge-trend rule support.
+- Added INFO / WATCH / HIGH / CRITICAL severity with explicit WHAT / WHY / SOURCE / ACTION context.
+- Added acknowledge, snooze, enable/disable, and alert-to-logbook workflows.
+- Added source-candidate tracking so multiple current sources can coexist without silent replacement.
+- Added preferred-source selection with automatic fallback to a fresh alternate when the preferred source becomes stale.
+- Added configurable numeric, position, and angle source-conflict thresholds.
+- Added an Engineering-only **Integration Health** console with update rate, stale/unknown mappings, current source conflicts, reconnect counts, and persistent connection history.
+- Added optional local retention policies for navigation tracks, tank/environment/energy observations, measurements, and alert-event history. Retention is disabled by default and includes a dry-run preview.
+- Added automatic retention only when the user explicitly enables the policy.
+- Added alerts to Bridge Attention without replacing existing Findings.
+- Added schema v25/v26 non-destructive migrations.
+- Maintained read/observe/analyze/log-only connected-vessel boundary; no vessel control was added.
+
+## v2.7.0 — Batch 14: Live Tankage + Vessel Environment
+
+- Live tank sensor mappings with explicit tank targets and calibration-aware quantity estimates.
+- Sensor/manual tank reconciliation with configurable disagreement review band.
+- First-class tank observation history; adopting a sensor value is an explicit user action.
+- Live outside/cabin humidity and temperature, refrigerator/freezer, and sea-water environment data.
+- First-class captured environment snapshots.
+- Bilge-cycle and watermaker-production support via explicitly labeled custom mappings (not standard Signal K keys).
+- Synthetic feed expanded for tankage/environment testing.
+- Schema v24 (v23 tankage, v24 environment).
+
+# Changelog
+
+## v2.7.0 — Batch 13: Live Engine Room + Live POWERWATCH
+
+- Added live engine Signal K mappings for RPM, run time/engine hours, coolant temperature, oil pressure, alternator voltage, fuel rate, and optional exhaust temperature.
+- Added unit normalization for Hz→RPM, seconds→hours, Pa→psi, m³/s→US gal/hr, and ratio→percent.
+- Added a read-only **Live Engine Room** to Vessel with freshness/source provenance and explicit snapshot capture into measurement history.
+- Added live electrical mappings for house battery SOC/voltage/current/temperature, alternator voltage/current/temperature, solar voltage/current, inverter DC current, and inverter AC real power.
+- Added **Live POWERWATCH** to Resources with observed SOC/current, instantaneous battery/alternator/solar power, inverter load, and transparent time-to-reserve estimate.
+- Added low-confidence diagnostic electrical snapshot capture into existing Energy Observation history; AFLOAT labels instantaneous annualization limitations explicitly.
+- Expanded synthetic connected-vessel feed to exercise engine and electrical UI offline.
+- Added schema v21/v22 non-destructive migrations for engine/electrical settings and default mappings.
+- Expanded live rendering so Vessel and Resources update when connected observations arrive.
+- Maintained read/observe/analyze/log-only safety boundary: no engine, charging, inverter, or load control.
+
+## v2.3.0 — Batch 12: NMEA 0183 + NMEA 2000
+
+- Added optional read-only browser-direct NMEA 0183 Web Serial adapter.
+- Added checksum validation and diagnostics for talker IDs, sentence types, valid/invalid counts, parse errors, and mapped values.
+- Added parsers for RMC, GGA, HDT, HDG, VTG, VHW, MWV, DBT, DPT, and MTW.
+- Direct NMEA observations feed the same AFLOAT live-data bus used by Signal K without overwriting manual records.
+- Raw direct-serial sentence diagnostics are runtime-only and capped at 20 lines.
+- Added NMEA 2000 source/PGN/device provenance display when exposed through Signal K.
+- Signal K/gateway remains the preferred NMEA 0183 and NMEA 2000 integration path.
+- No direct CAN/NMEA 2000 control and no vessel-control functions were added.
+- Schema v19 adds NMEA 0183 connection configuration; schema v20 adds NMEA 2000 preferences/source metadata scaffolding.
+- PWA cache namespace updated to `afloat-v2.3.0`.
+
+
+## v2.1.0 — Batch 11: Signal K Core + Live Navigation
+
+- Added browser-direct Signal K `/signalk` discovery and WebSocket delta-stream adapter.
+- Added path subscription manager, source provenance, explicit unit normalization, freshness/age state, reconnect diagnostics, and runtime-only session token support.
+- Added Live Data workspace with Cruising and Engineering complexity layers.
+- Added live navigation for position, SOG, COG, true heading, depth, apparent wind, and pressure.
+- Added source precedence: prefer current live, prefer manual, or newest observation.
+- Added rate-limited local navigation track history and voyage distance/ETA estimates.
+- Added live anchor distance-from-drop observation.
+- Quick Log can snapshot current live position and conditions.
+- Added synthetic live feed for offline/demo verification.
+- Schema v17 adds data sources / Signal K mappings; schema v18 adds navigation tracks.
+- Manual/offline operation remains fully functional and live data never silently replaces manual planning records.
+
+## v1.9.1 — Cruising / Engineering UI cleanup
+
+- Turned the lower-left Cruising / Engineering control into a real complexity-mode switch over the same vessel data.
+- Cruising now emphasizes operational status, margins, current history, and actions while suppressing configuration-heavy detail.
+- Cruising hides vessel topology editing, tank calibration/internal tank setup, raw resource/stock transaction audit trails, POWERWATCH load/source/storage configuration, route-construction controls, detailed historical-statistics tables, relationship/provenance panels, internal record IDs, and destructive record-management actions.
+- Engineering restores configuration, calibration, assumptions, provenance, relationships, statistical detail, model internals, and record-management controls.
+- Added an explicit mode caption and current-mode workspace eyebrow; mode buttons now expose `aria-pressed` state and descriptive tooltips.
+- Simplified the shared Record Inspector in Cruising while preserving normal operational edit/evidence workflows.
+- Verified repeated mode switching does not mutate the underlying vessel state.
+- Fixed a pre-existing Settings/Data Health runtime defect caused by missing `dataHealth()` and `totalRecordCount()` helpers.
+- Persisted schema remains **v16**; no data migration is required from v1.9.0.
+- Updated PWA cache namespace to `afloat-v1.9.1`.
+- Added mode-cleanup regression coverage plus Chromium comparison renders across ten workspaces in both modes and a fresh 390 × 844 mobile-drawer verification.
+
 ## v1.9.0 — Batch 10: Historical Vessel Intelligence
 
 - Added a dedicated **Intelligence** workspace for vessel-specific historical observations.
